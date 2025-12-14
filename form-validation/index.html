@@ -78,33 +78,17 @@
           <button class="form-submit">Đăng ký</button>
         </form>
       </div>
-    <script src="./validation.js"> </script>
+    <script src="./validator.js"> </script>
 
     <script>
         Validator({
             form: '#form-1',
-            formGroupSelector: '.form-group',
-            errorSelector: '.form-message',
             rules: [
-                Validator.isRequired('#fullname',' Vui lòng nhập họ tên đầy đủ của bạn'),
-                Validator.isRequired('#email'),
-                Validator.isEmail('#email'),
-                Validator.minLength('#password',6),
-                Validator.isRequired('#password_confirmation'),
-                Validator.isRequired('#avatar'),
-                Validator.isRequired('#province'),
-                Validator.isRequired('input[name="gender"]'),
-                Validator.isComfirmed('#password_confirmation',function(){
-                    var passwordValue = document.querySelector('#form-1 #password'); 
-                    return passwordValue.value;
-                },'Mật khẩu nhập lại không chính xác'),
-                
-            ],
-            onSubmit: function (data) {
-                //call API
-                console.log(data);
-            }
-        });
+              Validator.isRequired('#fullname'),
+              Validator.isEmail('#email')
+            ]
+        })
     </script>
+
 </body>
 </html>
