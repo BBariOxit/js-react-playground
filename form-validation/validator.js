@@ -1,20 +1,24 @@
 function Validator(options) {
+    function Validate(inputElement, rule) {
+        var errorElement = inputElement.parentElement.querySelector('.form-message')
+        var errorMessage = rule.test(inputElement.value)
+        if (errorMessage) {
+            errorElement.innerText = errorMessage
+                inputElement.parentElement.classList.add('invalid')
+            } else {
+                errorElement.innerText = "" 
+                inputElement.parentElement.classList.remove('invalid')
+            }
+    }
+
     var formElement = document.querySelector(options.form)
+
     if (formElement) {
         options.rules.forEach(rule => {
             var inputElement = formElement.querySelector(rule.selector)
-            var errorElement = inputElement.parentElement.querySelector('.form-message')
             if (inputElement) {
                 inputElement.onblur = () => {
-                    var errorMessage = rule.test(inputElement.value)
-
-                    if (errorMessage) {
-                        errorElement.innerText = errorMessage
-                        inputElement.parentElement.classList.add('invalid')
-                    } else {
-                       errorElement.innerText = "" 
-                       inputElement.parentElement.classList.remove('invalid')
-                    }
+                    Validate(inputElement, rule)
                 }
             }
         });
