@@ -46,6 +46,7 @@ function Validator(options) {
             })
 
             if (isFormValid){
+                //trường hợp submit với js
                 if (typeof options.onSubmit === 'function') {
                     var enableINputs = formElement.querySelectorAll('[name]')
                     var formValues = Array.from(enableINputs).reduce(function(values, input){
@@ -53,6 +54,9 @@ function Validator(options) {
                     }, {})
 
                     options.onSubmit(formValues)
+                //trường hợp submit với hành vi mặc định
+                } else {
+                    formElement.submit()
                 }
             }
         }

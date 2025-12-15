@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <h1 id="heading"> hello world!</h1> -->
+    <div id="root"></div>
+    <script>
+        const h1 = document.createElement('h1')
+        const root = document.querySelector('#root')
+
+        h1.innerText = 'hello world!'
+        h1.id = 'test'
+        h1.className = 'test2'
+        // h1.style.color = 'red'
+        // h1.style = 'color: blue; font-size: 30px'    
+        Object.assign(h1.style, {
+            color: 'blue',
+            backgroundColor: 'pink'
+
+        }) 
+        // document.body.appendChild(h1)
+
+        //bản chất của render trong root
+        root.appendChild(h1)
+    </script>
+</body>
+</html>
