@@ -37,7 +37,7 @@
             <span class="form-message"></span>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="avatar" class="form-label">Chọn ảnh đại diện</label>
             <input id="avatar" name="avatar"  type="file" class="form-control">
             <span class="form-message"></span>
@@ -73,7 +73,7 @@
               </div>
             </div>
             <span class="form-message"></span>
-          </div>
+          </div> -->
       
           <button class="form-submit">Đăng ký</button>
         </form>
@@ -88,12 +88,15 @@
               Validator.isRequired('#fullname'),  
               Validator.isEmail('#email'),
               Validator.isRequired('#email'),
-              Validator.minLength('#password', 8),
+              Validator.minLength('#password', 4),
               Validator.isConfirmed('#password_confirmation', function() {
                 return document.querySelector('#form-1 #password').value
               }, 'mật khẩu nhập lại không chính xác'),
               Validator.isRequired('#password_confirmation'),
-            ]
+            ],
+            onSubmit: (data) => {
+              console.log(data)
+            },
         })
     </script>
 

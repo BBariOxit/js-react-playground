@@ -22,12 +22,42 @@ function Validator(options) {
                 errorElement.innerText = "" 
                 inputElement.parentElement.classList.remove('invalid')
             }
+
+        return !errorMessage
     }
 
     //lấy element của form
     var formElement = document.querySelector(options.form)
 
     if (formElement) {
+        //khi submit form
+        formElement.onsubmit = (e) => {
+            e.preventDefault()
+
+            var isFormValid = true
+
+            //lặp qua từng rule và validate
+            options.rules.forEach(rule => {
+                var inputElement = formElement.querySelector(rule.selector)
+                var isValid = Validate(inputElement, rule)
+                if(!isValid) {
+                    isFormValid = false
+                }
+            })
+
+            if (isFormValid){
+                if (typeof options.onSubmit === 'function') {
+                    var enableINputs = formElement.querySelectorAll('[name]')
+                    var formValues = Array.from(enableINputs).reduce(function(values, input){
+                        return (values[input.name] = input.value) && values
+                    }, {})
+
+                    options.onSubmit(formValues)
+                }
+            }
+        }
+
+        //lặp qua mỗi rule và xử lý (lắng nghe sự kiện)
         options.rules.forEach(rule => {
             //lưu lại các rule cho mỗi input
             if (Array.isArray(selectorRules[rule.selector])) {
@@ -51,7 +81,6 @@ function Validator(options) {
                 }
             }
         });
-        console.log(selectorRules)
     }
 }
 
@@ -82,7 +111,7 @@ Validator.minLength = function(selector, min, message) {
     return {
         selector: selector,
         test: (value) => {
-            return value.lenght >= min ? undefined : message || `vui lòng nhập tối thiểu ${min} ký tự`
+            return value.length >= min ? undefined : message || `vui lòng nhập tối thiểu ${min} ký tự`
         }
     }
 }
