@@ -87,7 +87,10 @@
             rules: [
               Validator.isRequired('#fullname'),  
               Validator.isEmail('#email'),
-              Validator.minLength('#password', 8)
+              Validator.minLength('#password', 8),
+              Validator.isConfirmed('#password_confirmation', function() {
+                return 'alo'
+              })
             ]
         })
     </script>

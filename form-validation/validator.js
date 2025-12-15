@@ -40,30 +40,39 @@ function Validator(options) {
 //nguyên tắc rule:
 // 1. khi có lỗi => message error
 // 2. khi ko có lỗi => undefined
-Validator.isRequired = function(selector) {
+Validator.isRequired = function(selector, message) {
     return {
         selector: selector,
         test: (value) => {
-            return value.trim() ? undefined : 'vui lòng nhập đủ trường này'
+            return value.trim() ? undefined : message || 'vui lòng nhập đủ trường này'
         }
     }
 }
 
-Validator.isEmail = function(selector) {
+Validator.isEmail = function(selector, message) {
     return {
         selector: selector,
         test: (value) => {
             var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-            return regex.test(value) ? undefined : "trường này phải là email"
+            return regex.test(value) ? undefined : message || "trường này phải là email"
         }
     }
 }
 
-Validator.minLength = function(selector, min) {
+Validator.minLength = function(selector, min, message) {
     return {
         selector: selector,
         test: (value) => {
-            return value.lenght >= min ? undefined : `vui lòng nhập tối thiểu ${min} ký tự`
+            return value.lenght >= min ? undefined : message || `vui lòng nhập tối thiểu ${min} ký tự`
+        }
+    }
+}
+
+Validator.isConfirmed = function(selector, getConfirmValue, message) {
+    return {
+        selector: selector,
+        test: (value) => {
+            return value === getConfirmValue() ? undefined : message || 'giá trị nhập vào không chính xác'
         }
     }
 }
