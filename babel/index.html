@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div class="root"></div>
+    <script type="text/babel">
+        //EX: render từ array
+        const course = [
+            {
+                name: 'html-css'
+            },
+            {
+                name: 'javascript'
+            },
+            {
+                name: 'reactJS'
+            },
+        ]
+        const renderCourse = <ul>
+            {course.map((element) => {
+                return <li>{element.name}</li>
+            })}
+        </ul>
+        //đã sử dụng babel
+        const ulReact = <ul>
+            <li>Javascript</li>
+            <li>ReactJS</li>
+        </ul>
+
+        //React.createElement
+        // const ulReact = React.createElement(
+        //     'ul',
+        //     null,
+        //     React.createElement('li',{ style: {color: 'blue', fontSize: '30px' } }, 'Javascript'),
+        //     React.createElement('li',{ style: {color: 'blue', fontSize: '30px' } }, 'ReactJS')
+        // )
+
+        const container = document.querySelector('.root')
+        const root = ReactDOM.createRoot(container)
+        root.render(renderCourse)
+        // root.render(ulReact)
+    </script>
+</body>
+</html>
