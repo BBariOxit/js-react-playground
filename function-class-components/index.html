@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
+
 <body>
     <div id="app"></div>
 
@@ -15,7 +17,7 @@
         //function component
         function Header() {
             return (
-                <div className = 'header'>New Header</div> 
+                <div className='header'>New Header</div>
             )
         }
 
@@ -23,24 +25,48 @@
         class Content extends React.Component {
             render() {
                 return (
-                    <div className = 'content'>New Content</div>
+                    <div className='content'>New Content</div>
                 )
             }
         }
 
         const app = (
-            <div className = 'wrapper'>
-                <Header />   
-                <Content />    
-                <div className = 'footer'>Footer</div>    
+            <div className='wrapper'>
+                <Header />
+                <Content />
+                <div className='footer'>Footer</div>
             </div>
         )
+           
+        //ex
+        function PostItem() {
+            return (
+                <div className="post-item">
+                    <img src="https://cdn.fullstack.edu.vn/fake-image.jpg" alt="C# .NET course"/>
+                    <h2 className="post-title">C# (.NET) - Từ cơ bản đến nâng cao</h2>
+                    <p className="post-desc">
+                        Học cách xây dựng ứng dụng desktop và web với nền tảng .NET hiện đại,
+                        đi kèm ví dụ thực tế và bài tập thực hành.
+                    </p>
+                    <p className="post-published">Đăng ngày 12/12/2025</p>
+                </div>
+            )
+        }
+        const example = (
+            <div className="posts-list">
+            <PostItem />
+            <PostItem />
+            <PostItem />
+            </div>
+        )
+
 
         //render
         const container = document.querySelector('#app')
         const root = ReactDOM.createRoot(container)
-        root.render(app)
+        root.render(example)
     </script>
 
 </body>
+
 </html>
