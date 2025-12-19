@@ -25,9 +25,15 @@
         ]
         const renderCourse = <ul>
             {course.map((element) => {
-                return <li>{element.name}</li>
+                <li>{element.name}</li>
             })}
         </ul>
+
+        const testFragment = 
+        <React.Fragment>
+            <h1>helllo</h1>
+            <h2>xin chao</h2>
+        </React.Fragment>
         //đã sử dụng babel
         const ulReact = <ul>
             <li>Javascript</li>
