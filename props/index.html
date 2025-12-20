@@ -15,11 +15,10 @@
 
     <script type="text/babel">
 
-
-
         function PostItem({
+            //destructering cho object props, khỏi phải làm theo kiểu prop.image,...
             image,
-            title,
+            title,      
             description,
             publishedAt,
         }) {
@@ -44,6 +43,7 @@
             return (
                 <div className="wrapper">
                     <PostItem
+                        // truyền dữ liệu qua props
                         title='1 C# (.NET) - Từ cơ bản đến nâng cao'
                         image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpgXV83U-cLF2i2RMfDYEp5qWGZPk-Gt4J_w&s'
                         description='1 Học cách xây dựng ứng dụng desktop và web với nền tảng .NET hiện đại, đi kèm ví dụ thực tế và bài tập thực hành.'
