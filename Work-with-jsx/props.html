@@ -29,9 +29,25 @@
             )
         }
 
+        //render props(children)
+        function List({data, children}) {
+            return (
+                <ul>
+                    {/*{data.map((item) => children(item))}*/} 
+
+                    {/*spread and rest*/}
+                    {/*{data.map((...props) => children(...props))}*/}
+
+                    {/*ngan gon: children vốn là function có 2 tham số là */}
+                    {data.map(children)}
+                </ul>
+            )
+        }
+
         function App() {
             const title = 'hello pặc pặc'
             const isPrimary = true
+            const cars = ['BMW', 'honda', 'mazda']
             return (
                 <div class="wrapper">
                     <Button 
@@ -53,9 +69,11 @@
                         // }}
                         onFocus = {() => {
                             console.log(Math.random());
-                            
                         }}
                     />
+                    <List data = {cars}>
+                       {(item, index) => <li key={index}>{item}</li>} 
+                    </List>
                 </div>  
             )
         } 
