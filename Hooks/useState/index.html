@@ -16,20 +16,22 @@
     const { useState } = React
 
     function Button2() {
-      const [info, setInfo]= useState({
-        name: 'Nguyen Van A',
-        age: '20',
-        address: 'Dalat, VN'
+
+      const [info, setInfo] = useState({
+        name: 'Phan Thai Bao',
+        age: 21,
+        address: 'DaLat, Vn'
       })
 
       const handleUpdate = () => {
         setInfo({
           ...info,
-          bio: 'hay cuoi'
+          bio: 'hahahaha'
         })
       }
+
       return (
-        <div className="wrap">
+        <div class="wrap">
           <h1>{JSON.stringify(info)}</h1>
           <button onClick={handleUpdate}>Update</button>  
         </div>
