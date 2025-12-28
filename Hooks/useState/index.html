@@ -40,13 +40,11 @@
     
     function App() {
       // const [counter, setCounter] = React.useState(1)
-      const [counter, setCounter] = React.useState(() => {
+      const [counter, setCounter] = React.useState(() =>{
         const total = orders.reduce((total, curr) => total + curr)
-        console.log(total)
         return total
       })
 
-      
       const handleIncrease = () => {
         setCounter(counter + 1)
         // setCounter(prevState => prevState + 1)
