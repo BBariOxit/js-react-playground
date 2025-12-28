@@ -70,8 +70,15 @@ function Validator(options) {
                     var formValues = Array.from(enableINputs).reduce(function(values, input){
                         switch(input.type) {
                             case 'radio':
-                            case 'checkbox':
                                 values[input.name] = formElement.querySelector('input[name="' + input.name + '"]:checked').value
+                                break
+                            case 'checkbox':
+                                if (!input.matches(':checked')) return values
+
+                                if(!Array.isArray(values[input.name])) {
+                                    values[input.name] = []
+                                }
+                                values[input.name].push()
                                 break;
                             default:
                                 values[input.name] = input.value

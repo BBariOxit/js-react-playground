@@ -37,7 +37,7 @@
             <span class="form-message"></span>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="password_confirmation" class="form-label">Giới tính</label>
             <div>
               <input name="gender" type="radio" value="male" class="form-control">
@@ -52,28 +52,13 @@
               Khác
             </div>
             <span class="form-message"></span>
-          </div>
-          <!-- <div class="form-group">
-            <label for="avatar" class="form-label">Chọn ảnh đại diện</label>
-            <input id="avatar" name="avatar"  type="file" class="form-control">
-            <span class="form-message"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="province" class="form-label">Tỉnh/TP</label>
-            <select name="province" id="province" class="form-control">
-              <option value="">---Chọn Tỉnh/TP---</option>
-              <option value="hnct">Hà nội</option>
-              <option value="hcmct">TP. Hồ Chí Minh</option>
-            </select>
-            <span class="form-message"></span>
-          </div>
+          </div> -->
 
           <div class="form-group">
             <label for="password_confirmation" class="form-label">Giới tính</label>
             <div class="gender horizontal">
               <div class="gender_male horizontal">
-                <input name="gender"  type="radio" value="male" class="form-control" checked>
+                <input name="gender"  type="radio" value="male" class="form-control">
                 <div class="spacer-hori"></div>
                   Nam
               </div>
@@ -89,7 +74,24 @@
               </div>
             </div>
             <span class="form-message"></span>
-          </div> -->
+          </div>
+
+          <div class="form-group">
+            <label for="province" class="form-label">Tỉnh/TP</label>
+            <select name="province" id="province" class="form-control">
+              <option value="">---Chọn Tỉnh/TP---</option>
+              <option value="hnct">Hà nội</option>
+              <option value="hcmct">TP. Hồ Chí Minh</option>
+            </select>
+            <span class="form-message"></span>
+          </div>
+          <!-- <div class="form-group">
+            <label for="avatar" class="form-label">Chọn ảnh đại diện</label>
+            <input id="avatar" name="avatar"  type="file" class="form-control">
+            <span class="form-message"></span>
+          </div>
+
+           -->
       
           <button class="form-submit">Đăng ký</button>
         </form>
@@ -105,6 +107,7 @@
               Validator.isRequired('#fullname'),  
               Validator.isEmail('#email'),
               Validator.isRequired('#email'),
+              Validator.isRequired('#province'),
               Validator.isRequired('input[name="gender"]'),
               Validator.minLength('#password', 4),
               Validator.isConfirmed('#password_confirmation', function() {
