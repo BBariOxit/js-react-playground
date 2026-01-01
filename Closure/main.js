@@ -3,6 +3,7 @@ function createCounter() {
 
   function increase() { //cái này cũng thế
     return ++counter  //truy cập được biến ở bên ngoài phạm vi của nó(vì bên trong phạm vi của nó ko có nên nó nhảy ra ngoài nó tìm)
+                      //tham chiếu tới biến counter nằm bên ngoài phạm vi
   }
 
   return increase 
@@ -104,3 +105,45 @@ app.add('BMW')
 app.add('Porsche')
 app.add('Honda')
 app.show()
+
+
+//vd khác
+
+function QuanLyQuyDen(soTienBanDau) {
+  let total = soTienBanDau  //private
+
+  return {
+    nopTien(amount) {
+      if(amount > 0) {
+        total += amount
+        console.log(`đã nạp thêm ${amount}. Tổng quỹ là: ${total}`)
+      } else {
+        console.log('định rửa tiền à')
+      }
+    },
+    rutTien(amount) {
+      if (amount <= 0) {
+        console.log("Mày định rút số âm để nạp thêm tiền lậu à? Khôn như mày quê tao đầy!");
+        return 0; 
+      }
+      if (amount <= total) {
+        total -= amount
+        console.log(`đã rút ${amount}. Số dư còn lại: ${total}`);
+        return amount
+      } else {
+        console.log('ko đủ tiền, đi làm thêm đi!');
+      }
+    },
+    xemSoDu() {
+      return `Mày đang có ${total} trong tài khoản`
+    }
+  }
+}
+
+const quyCuaT = QuanLyQuyDen(5000)
+
+quyCuaT.nopTien(1000)
+console.log(quyCuaT.xemSoDu());
+quyCuaT.rutTien(500)
+console.log(quyCuaT.xemSoDu());
+
