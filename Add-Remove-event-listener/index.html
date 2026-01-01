@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <button class="btn">Click me!</button>
+
+  <button id="btn2" style="padding: 20px"></button>
+  <script>
+    const myBtn = document.querySelector('.btn')
+    const myBtn2 = document.querySelector('#btn2')
+
+    function thongBao() {
+      alert('mày vừa bấm vào nút đấy thằng ngu')
+    }
+    
+    // add event
+    myBtn.addEventListener('click', thongBao)
+
+    //remove event
+    // myBtn.removeEventListener('click', thongBao)
+
+    function hoverIn() {
+      myBtn2.style.backgroundColor = 'red'
+      myBtn2.innerText = 'đm, nhột'
+    }
+    function hoverOut() {
+      myBtn2.style.backgroundColor = ''
+      myBtn2.innerText = 'cút rồi à'
+    }
+
+    myBtn2.addEventListener('mouseover', hoverIn)
+    myBtn2.addEventListener('mouseout', hoverOut)
+    
+
+    //nếu ko xài nữa thì nhớ remove cho trống RAM
+    setTimeout(() => {
+        myBtn2.removeEventListener('mouseover', hoverIn);
+        myBtn2.removeEventListener('mouseout', hoverOut);
+        myBtn2.innerText = "Hết hiệu ứng rồi, đừng có thử nữa!";
+        console.log("Đã gỡ sạch listener sau 5 giây.");
+    }, 5000);
+  </script>
+</body>
+</html>
