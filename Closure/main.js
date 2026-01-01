@@ -83,3 +83,24 @@ profileSetting2.set('alo', 'lo **')
 profileSetting2.set('name', 'PTB2')
 profileSetting2.set('address', 'Da Lat, VN')
 console.log(profileSetting2.get('alo'));
+
+//VD private
+
+function createApp() {
+  let cars = [] //private
+
+  return {
+    add(car) {
+      cars.push(car)
+    },
+    show(car) {
+      console.log(cars);
+    }
+  }
+}
+
+const app = createApp()
+app.add('BMW')
+app.add('Porsche')
+app.add('Honda')
+app.show()
