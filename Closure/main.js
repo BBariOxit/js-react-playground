@@ -47,20 +47,39 @@ errorLogger('gửi mail thành công cho user xxx')
 //VD localstorage
 
 function createStorage(key) {
-  const store = JSON.parse(localStorage.get(key)) ?? {}
+  const store = JSON.parse(localStorage.getItem(key)) ?? {}
+
+  const save = () => {
+    localStorage.setItem(key, JSON.stringify(store))
+  }
 
   const storage = {
     get(key) {
       return store[key]
     },
-    set() {
-
+    set(key, value) {
+      store[key] = value
+      save()
     },
-    delete() {
-
+    delete(key) {
+      delete store[key]
+      save()
     }
   }
 
   return storage
 }
 
+//profileSetting.js
+
+const profileSetting = createStorage('profile')
+profileSetting.set('alo', 'day em iu')
+profileSetting.set('name', 'PTB')
+profileSetting.set('address', 'Da Lat')
+console.log(profileSetting.get('alo'));
+
+const profileSetting2 = createStorage('profile2')
+profileSetting2.set('alo', 'lo **')
+profileSetting2.set('name', 'PTB2')
+profileSetting2.set('address', 'Da Lat, VN')
+console.log(profileSetting2.get('alo'));
