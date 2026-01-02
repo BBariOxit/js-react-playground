@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    //1. new promise
+    //2. Executer
+
+    //trạng thái: pending-fulilled-rejected
+    let promise = new Promise(
+      //Executer
+      function(resolve, reject) {
+        //ko resolve hoặc reject sẽ làm rò rỉ bộ nhớ
+        //resolve
+        resolve([{
+          id: 1,
+          name: 'PTB',
+          address: 'DALAT'
+        }])
+
+        //reject
+        // reject('lỗi bảo mật')
+      }
+    )
+    
+    promise
+      //  promise chain
+      .then((profile) => {
+        console.log(profile);  //nếu resolve
+      })
+      .then(() => {
+        console.log(1);    //nếu resolve thì sẽ thực thi tất cả .then
+      })
+      .then(() => {
+        console.log(2);  
+      })
+      .then(() => {
+        return new Promise((resolve,reject) => {    //promise lồng trong một promise
+          setTimeout(() => {                 //resolve thì nó sẽ trả vào .then tiếp theo(hoặc catch) => sau đó đều finally
+            resolve([8,8,8,8,8,8,8])
+          }, 3000)
+        })  
+      })
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        console.log(error);  //nếu reject
+      })
+      .finally(() => {
+        console.log('đã hoàn thành');  //cuối cùng dù thành công hay thất bại thì đều lọt vòa finally
+      })
+
+  </script>
+</body>
+</html>
