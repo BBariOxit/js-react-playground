@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    //1. new promise
+    //2. Executer
+
+    //trạng thái: pending-fulilled-rejected
+    let promise = new Promise(
+      //Executer
+      function(resolve, reject) {
+        //ko resolve hoặc reject sẽ làm rò rỉ bộ nhớ
+        //resolve
+        resolve([{
+          id: 1,
+          name: 'PTB',
+          address: 'DALAT'
+        }])
+
+        //reject
+        // reject('lỗi bảo mật')
+      }
+    )
+    
+    promise
+      //  promise chain
+      .then((profile) => {
+        console.log(profile);  //nếu resolve
+      })
+      .then(() => {
+        console.log(1);   //nếu resolve thì sẽ thực thi tất cả .then
+      })
+      .then(() => {
+        console.log(2) 
+      })
+      .then(() => {
+        return new Promise((resolve,reject) => {    //promise lồng trong một promise
+          setTimeout(() => {                 //resolve thì nó sẽ trả vào .then tiếp theo(hoặc catch) => sau đó đều finally
+            resolve([8,8,8,8,8,8,8])
+          }, 3000)
+        })  
+      })
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        console.log(error)  //nếu reject
+      })
+      .finally(() => {
+        console.log('đã hoàn thành');  //cuối cùng dù thành công hay thất bại thì đều lọt vòa finally
+      })
+      
+    //VD
+    function sleep(ms) {
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, ms)
+      })
+    }
+    sleep(5000) //set 7s là để cái promise của bài trên chạy xong tránh .then bài này ko chạy
+      .then(() => {
+        console.log(1)
+        return sleep(1000) //thằng then tiếp theo phải chờ thằng promise này được giải quyết thì nó mới chạy(ngủ 1s)
+      })
+      .then(() => {
+        console.log(2)
+        return sleep(1000)
+      })
+      .then(() => {
+        console.log(3)
+        return new Promise((resolve, reject) => {  
+          reject()  //nếu giữa đường mà có 1 promise bị reject thì sẽ ko chạy các .then còn lại và lọt vào catch 
+        })
+      })
+      .then(() => {
+        console.log(4)
+        return sleep(1000)
+      })
+      .catch(() => {
+        console.log('lỗi mẹ r')
+      })
+      .finally(() => {
+        console.log('đã hoàn thành')
+      })
+
+    
+    //cách tạo nhanh
+    //Promise.resolve - Promise.reject - Promise.all
+    let promise3 = Promise.resolve('luôn thành công') //reject tương tự
+    promise3
+      .then((result) => {
+        console.log(result)   //bất đông bộ nên nó sẽ hiện ra sau thằng obj đầu tiên
+      })
+      .catch(() => {
+        console.log('lỗi mẹ nữa r')
+      })
+
+    let promise4 = new Promise((rs, rj) => {
+      setTimeout(() => {
+        rs([1,2])
+      }, 1000)
+    }) 
+    let promise5 = new Promise((rs, rj) => {
+      setTimeout(() => {
+        rs([3,4])
+      }, 3000)
+    })  
+    Promise.all([promise4, promise5]) //khi tất cả promise đầu vào xong thì nó mới lọt vào .then trong all
+      .then(([kq1, kq2]) => {   //đầu vao .all là một mảng  // chỉ cần 1 thằng reject thì nó sẽ lọt vào catch của .all bất kể thằng kia thế nào
+        console.log(kq1.concat(kq2))
+      })
+      .catch(() => {
+        console.log('lỗi mẹ nữa r')
+      })
+  </script>
+</body>
+</html>

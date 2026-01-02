@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul class="ulDOM">
+
+  </ul>
+  <script>
+
+    let users = [ // có nhiều user nên xài mảng, trong array có nhiểu obj, mỗi obj thể hiện mỗi một user
+      {
+        id: 1,
+        name: 'Phan Thai Bao'
+      },
+      {
+        id: 2,
+        name: 'Đàm Vĩnh Hưng'
+      },
+      {
+        id: 3,
+        name: 'thằng ất ơ nào đó'
+      }
+      //... nhiều user khác
+    ]
+  
+  let comments = [
+    {
+      id: 1,
+      user_id: 1,
+      content: 'form validation khó vãi ***'
+    },
+    {
+      id: 2,
+      user_id: 2,
+      content: 'hooks học cuốn vô cùng'
+    },
+    {
+      id: 2,
+      user_id: 1,
+      content: 'bài này đau đầu phết'
+    }
+  ]
+
+  //1. lấy comments
+  //2. từ comments lấy ra user_id
+  //3. từ user_id lấy ra user tương ứng
+
+  //fake api
+
+  function getComments() {
+    return new Promise((rs,rj) => {
+      setTimeout(() => {
+        rs(comments)
+      }, 1000)
+    })
+  }
+
+  function getUsersByIds(userId) {
+    return new Promise((rs, rj) => {
+      let result = users.filter((user) => {
+        return userId.includes(user.id)
+      })
+      setTimeout(() => {
+        rs(result)
+      }, 1000)
+    })
+  }
+
+  getComments()
+    .then((comments) => {
+      let userId = comments.map((comment) => {
+        return comment.user_id
+      })
+      
+      return getUsersByIds(userId)
+        .then((users) => {
+          console.log({
+            users: users,
+            comments: comments
+          });
+          
+          return {
+            users: users,
+            comments: comments
+          }
+        })
+    })
+    .then((data) => {
+      let ulDOM = document.querySelector('.ulDOM')
+
+      let html = ''
+      data.comments.forEach((comment) => {
+        let user = data.users.find((user) => {
+          return user.id === comment.user_id
+        })
+        html += `<li>${user.name}: ${comment.content}</li>`
+      })
+
+      ulDOM.innerHTML = html
+    })
+  
+  </script>
+</body>
+</html>
