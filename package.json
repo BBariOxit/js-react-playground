@@ -1,0 +1,25 @@
+{
+  "name": "js-playgroud",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "json-server --watch db.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BBariOxit/js-playground.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BBariOxit/js-playground/issues"
+  },
+  "homepage": "https://github.com/BBariOxit/js-playground#readme",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}

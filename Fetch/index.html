@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <ul class="post-blog">
+
+  </ul>
+  <script>
+
+    // backend => API(url) => Fetch => JSON => JSON.parse => kavascript types => render ra giao diện với html
+    let postAPI = 'https://jsonplaceholder.typicode.com/posts'
+
+    fetch(postAPI)  //fetch là 1 promise
+      .then(response => response.json()) // lại trả về một promise  //JSON.parse, nó chuyển đổi JSON -> javascript types
+      .then((posts) => {
+        let htmls = posts.map((post) => {
+          return `<li>
+              <h2>${post.title}</h2>
+              <p>${post.body}</p>
+            </li>`
+        })
+        console.log(htmls);
+        
+        let html = htmls.join('')
+        let postBlog = document.querySelector('.post-blog')
+
+        postBlog.innerHTML = html
+      })
+      .catch((err) => alert('lỗi mẹ r'))  //nếu nó lỗi thì lọt vào catch
+    
+    let postBlog = document.querySelector('.post-blog')
+
+  </script>
+</body>
+</html>
