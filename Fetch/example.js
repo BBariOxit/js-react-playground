@@ -1,0 +1,1 @@
+let listCourseBlock = document.querySelector('.list-course')
