@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    // Mặc định là String, JS nó mặc định coi mọi thứ là string để so sánh theo bảng mã Unicode
+    // Ví dụ: [1, 10, 2].sort() nó sẽ ra [1, 10, 2] chứ không phải [1, 2, 10].
+    // Vì sao? Vì số "1" đứng trước số "2", thế thôi.
+
+    // Tham số duy nhất: compareFunction(ko bắt buộc)
+    // Tăng dần: (a, b) => a - b
+    // Giảm dần: (a, b) => b - a
+    // -Nếu kết quả $< 0$: a đứng trước b.
+    // -Nếu kết quả $> 0$: b đứng trước a.
+    // -Nếu kết quả $= 0$: Giữ nguyên vị trí
+
+    // *CHÚ Ý: Nó thay đổi trực tiếp cái mảng gốc (In-place sorting) => nên clone mảng ra trước rồi mới sử dụng
+
+    //vd
+    const listGhe = [
+      { name: 'Em Huệ', size: 90 },
+      { name: 'Em Lan', size: 105 },
+      { name: 'Em Cúc', size: 85 }
+    ]
+    const sortedGhe = [...listGhe].sort((a,b) => {
+      // return b.size - a.size //lớn đến bé
+      return a.size - b.size //bé đến lớn
+    })
+    console.log(sortedGhe)
+    
+    //vd
+    const listSlave = [
+      {name: 'Ân', loyalty: 150},
+      {name: 'Quang', loyalty: 120},
+      {name: 'Thái', loyalty: 100}
+    ]
+
+    sortListSlave = [...listSlave].sort((a,b) => b.loyalty - a.loyalty)
+    console.log(sortListSlave)
+    
+
+    //VD: tạo hàm để sắp xếp một mảng dựa vào một mảng khác
+    const mapOrder = (originalArray, orderArray, key) => {
+      if (!originalArray || !orderArray || !key) return []
+
+      const clonedArray = [...originalArray]
+      const orderedArray = clonedArray.sort((a,b) => {
+        return orderArray.indexOf(a[key]) - orderArray.indexOf(b[key])
+      })
+      return orderedArray
+    }
+
+    //data
+    const originalItems = [
+      { id: 'id-1', name: 'One' },
+      { id: 'id-2', name: 'Two' },
+      { id: 'id-3', name: 'Three' },
+      { id: 'id-4', name: 'Four' },
+      { id: 'id-5', name: 'Five' }
+    ]
+    const itemOrderIds = ['id-5', 'id-2', 'id-4',  'id-3', 'id-1']
+    const key = 'id'
+
+    const orderedArray = mapOrder(originalItems, itemOrderIds, key)
+    console.log('original:', originalItems)
+    console.log('ordered:', orderedArray)
+    
+
+  </script>
+</body>
+</html>
