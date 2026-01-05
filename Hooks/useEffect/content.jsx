@@ -23,6 +23,7 @@ function Content() { //khi component này render thì code được đọc từ 
   const [posts, setPosts] = useState([])
   const [type, setType] = useState('posts')
   const [showGoToTop, setShowGoToTop] = useState(false)
+  const [width, setWidth] = useState(window.innerWidth)
 
   console.log(type);
   
@@ -55,12 +56,33 @@ function Content() { //khi component này render thì code được đọc từ 
     }
     
     window.addEventListener('scroll', handleScroll) //unmouted component nhưng sự kiện này vẫn còn => memory leak 
+    console.log('addEventListener')
+    
+    //Cleanup Function
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      console.log('removeEventListener')
+    }
   }, [])
 
+  //resize
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth) 
+    }
+    window.addEventListener('resize', handleResize)
+    //cleaup func
+    return () => (
+      window.removeEventListener('resize', handleResize)
+    )
+  }, [])
   
 
   return (
     <div>
+      <div>
+        <h1>chiều dài màn hình: {width}</h1>
+      </div>
 
         {tabs.map((tab) => (
           <button 
