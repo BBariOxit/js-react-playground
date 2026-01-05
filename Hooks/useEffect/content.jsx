@@ -14,6 +14,7 @@ function Content() { //khi component này render thì code được đọc từ 
   //-callback sẽ được gọi lại mỗi khi deps thay đổi
   //===============================
   //cả 3 trường hợp trên callbakck luôn đc gọi sau khi component mounted
+  //Cleanup func luôn đc gọi trc khi component unmounted
 
 
   const tabs = ['posts', 'comments', 'albums']
@@ -21,6 +22,7 @@ function Content() { //khi component này render thì code được đọc từ 
   const [title, setTitle] = useState('')
   const [posts, setPosts] = useState([])
   const [type, setType] = useState('posts')
+  const [showGoToTop, setShowGoToTop] = useState(false)
 
   console.log(type);
   
@@ -38,6 +40,24 @@ function Content() { //khi component này render thì code được đọc từ 
       setPosts(posts) 
     })
   }, [type])
+
+  //Listen DOM event
+  useEffect(() => {
+    const handleScroll = () => {
+      
+      if (window.scrollY >= 200) {
+        setShowGoToTop(true)  //nó gọi useEffect liên tục sau mốc 200 nhưng nó ko re-render lại, react tự làm cho chúng ta
+        console.log('set state')
+      } else {
+        setShowGoToTop(false)
+      }
+      // setShowGoToTop(window.scrollY >= 200)
+    }
+    
+    window.addEventListener('scroll', handleScroll) //unmouted component nhưng sự kiện này vẫn còn => memory leak 
+  }, [])
+
+  
 
   return (
     <div>
@@ -66,6 +86,19 @@ function Content() { //khi component này render thì code được đọc từ 
       </ul>
     {/* {console.log('render')}  */}
     {/* 'render' lúc nào cũng được in ra trước 'mounted'  */}
+
+       {showGoToTop && (
+        <button
+          style={{
+            position: 'fixed',
+            right: '20px',
+            bottom: '20px'
+          }}
+        >
+          Go to top
+        </button>
+       )} 
+
     </div>
     
   )
