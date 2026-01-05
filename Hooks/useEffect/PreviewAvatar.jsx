@@ -22,6 +22,7 @@ function PreviewAvatar() {
       <input 
         type="file"
         onChange={handlePreviewAvatar}
+        style={{marginTop: '20px'}}
       />
       {avatar && (
         <img src={avatar.preview} alt="" width='40%' />
