@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div class="root"></div>
+  <script type="text/babel">
+    const { useState, useReducer } = React
+
+    //useState
+    //1. init state: 0
+    //2. Actions: Up(state + 1) / down(state - 1)
+
+    //useReducer
+    //1. init state: 0
+    //2. Actions: Up(state + 1) / down(state - 1)
+    //3.Reducer
+    //4.Dispatch
+
+    //=> chỉ sử dụng khi nó phức tạp, nhiều obj arr lồng nhau,..., nếu đơn giản thì cứ xài useState
+
+    //áp dụng với useReducer
+    //1. init state: 0
+    const initState = 0
+    //Actions
+    const UP_ACTION = 'up' 
+    const DOWN_ACTION = 'down'
+    //Reducer
+    const reducer = (state, action) => {
+      console.log('reducer running....') // lần đầu useReducer ko gọi
+      switch(action) {
+        case UP_ACTION:
+          return state + 1
+        case DOWN_ACTION:
+          return state - 1
+        default:
+          throw new Error('Invalid action')
+      }
+    }
+
+    function App() {
+      //useState
+      // const [count, setCount] = useState(0)
+      //useReducer
+      const [count, dispatch] = useReducer(reducer, initState, )
+
+      //ininState = 0
+      //khi bấm nút lên hoặc xuống -> gọi hàm dispatch -> useReducer sử lý lấy cái action đc truyền vào dispatch
+      //-> nó đi gọi hàm reducer -> nó lấy cái state hiện tại là initState truyền vào đối sô thứ 1(state hiện tại trong hàm reducer = 0)
+      //nó lấy cái action truyền vào dispatch làm đối số thứ 2 của hàm reducer -> match case
+
+      return (
+        <div class="wrapper" style={{ padding: 20 }}>
+          <h1>{count}</h1>
+          <button
+            // onClick = {() => setCount(count - 1)}
+            onClick = {() => dispatch(DOWN_ACTION)} //dispatch truyền vào 1 action
+          >
+            down
+          </button>
+          <button
+            // onClick = {() => setCount(count + 1)}
+            onClick = {() => dispatch(UP_ACTION)}
+          >
+            up
+          </button>  
+        </div>
+      )
+    }
+
+    const root = ReactDOM.createRoot(document.querySelector('.root'))
+    root.render(<App />)
+
+  </script>
+</body>
+</html>

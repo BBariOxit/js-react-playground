@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div class="root"></div>
+  <script type="text/babel">
+    const { useState, useReducer, useRef } = React
+
+    //useReducer
+    //1.initState
+    const initState = {
+      job: '',
+      jobs: []
+    }
+
+    //2.actions
+    const SET_JOB = 'set_job'
+    const ADD_JOB = 'add_job'
+    const DELET_JOB = 'delete_job'
+
+    const setJob = payload => {
+      return {
+        type: SET_JOB,
+        payload
+      }
+    }
+
+    const addJob = payload => {
+      return {
+        type: ADD_JOB,
+        payload
+      }
+    }
+
+    const deleteJob = payload => {
+      return {
+        type: DELET_JOB,
+        payload
+      }
+    }
+
+    //3.reducer
+    const reducer = (state, action) => {
+      console.log(action)
+      console.log('prev state: ', state)
+
+      let newState
+
+      switch(action.type) {
+        case SET_JOB:
+          newState =  {
+            ...state,
+            job: action.payload
+          }
+          break
+        case ADD_JOB:
+          newState =  {
+            ...state,
+            jobs: [...state.jobs, action.payload]
+          }
+          break
+        case DELET_JOB:
+          const newJobs = [...state.jobs]
+          newJobs.splice(action.payload, 1) 
+          newState =  {
+            ...state,
+            jobs: newJobs
+          }
+          break
+        default:
+          throw new Error('invalid action')
+      }
+      console.log('newState: ', newState)
+      return newState
+    }
+
+    //4.dispatch
+
+    function App() {
+      const [state, dispatch] = useReducer(reducer, initState)
+      const { job, jobs } = state
+
+      const inputRef = useRef()
+
+      const handleSubmit = () => {  
+        dispatch(addJob(job))
+        dispatch(setJob(''))
+
+        inputRef.current.focus()
+      }
+      return (
+        <div class="wrapper" style={{ padding: 20 }}>
+          <h3></h3>
+          <input 
+            value = {job}
+            placeholder='Enter todo ...'
+            ref={inputRef}
+            onChange = {e => {
+              dispatch(setJob(e.target.value))
+            }}
+          />
+          <button onClick={handleSubmit}>Add</button>
+          <ul>
+            {jobs.map((job, index) => {
+              return <li key={index}>
+                {job}
+                <span 
+                  style={{margin: 10, cursor: 'pointer'}} 
+                  onClick={() => dispatch(deleteJob(index))}
+                >
+                  x
+                </span>
+              </li>
+            })}
+          </ul>
+        </div>
+      )
+    }
+
+    const root = ReactDOM.createRoot(document.querySelector('.root'))
+    root.render(<App />)
+
+  </script>
+</body>
+</html>
