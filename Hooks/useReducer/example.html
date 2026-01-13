@@ -48,43 +48,46 @@
 
     //3.reducer
     const reducer = (state, action) => {
-      console.log(action)
-      console.log('prev state: ', state)
-
-      let newState
-
       switch(action.type) {
         case SET_JOB:
-          newState =  {
+          return {
             ...state,
             job: action.payload
           }
-          break
         case ADD_JOB:
-          newState =  {
+          return {
             ...state,
             jobs: [...state.jobs, action.payload]
           }
-          break
         case DELET_JOB:
           const newJobs = [...state.jobs]
           newJobs.splice(action.payload, 1) 
-          newState =  {
+          return {
             ...state,
             jobs: newJobs
           }
-          break
         default:
           throw new Error('invalid action')
       }
-      console.log('newState: ', newState)
-      return newState
+      
     }
 
-    //4.dispatch
+    //logger
+    function logger(reducer) {
+      return (prevState, action) => {
+        console.group(action.type)
+        console.log('prevState: ', prevState)
+        console.log('action: ', action)
+
+        const newState = reducer(prevState, action)
+        console.log('Next state: ', newState)
+        console.groupEnd()
+        return newState
+      }
+    }
 
     function App() {
-      const [state, dispatch] = useReducer(reducer, initState)
+      const [state, dispatch] = useReducer(logger(reducer), initState)
       const { job, jobs } = state
 
       const inputRef = useRef()
