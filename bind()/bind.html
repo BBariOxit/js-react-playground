@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>Click me!</button>
+  <script>
+    this.firstName = 'Minh'
+    this.lastName = 'Thu'
+
+    const teacher = {
+      firstName: 'Minh',
+      lastName: 'Thảo',
+      getFullName() {
+        return `${this.firstName} ${this.lastName}` 
+      }
+    }
+    //case 1:
+    console.log(teacher.getFullName()) 
+    // KQ: Minh Thảo, this ở case này trỏ về đối tượng mà chúng ta gọi phương thức đó(teacher)
+    // (gọi 1 phương thức thông qua 1 đối tượng)
+
+    //case 2:
+    const getTeacherName = teacher.getFullName 
+    // KQ: Minh Thu, ở đây techer mới truy cập vào cái func mà thôi chưa gọi hàm, nó gán func vào biến getTeacherName
+    // bản chất func là 1 obj đặc biệt => referance type => gán tham chiếu cho 1 biến khác thực chất nó chỉ sao chép địa chỉ vùng nhớ
+    console.log(getTeacherName === teacher.getFullName)
+    //nó vẫn trả ra true vì cùng trỏ tới 1 địa chỉ vùng nhớ
+    console.log(getTeacherName()) 
+    // thế tại sao nó lại trả ra Minh Thu mà ko phải Minh Thảo
+    // vì khi gọi 1 hàm ko thông qua 1 đối tượng (kiểu obj.aaaaa có dấu chấm phía trước)
+    // từ khóa this nó sẽ trỏ ra đối tượng global (chọc vào phạm vi window) -> nên nó lấy Minh và Thu ở phạm vi window
+
+    // => cho dù chính là cái method được tạo ra bên trong đối tượng, mà chúng ta gán nó sang 1 biến khác,
+    // chúng ta gọi biến đó ko thông qua đối tượng -> từ khóa this nó vẫn trỏ về phạm vi window
+
+
+    //nếu muốn console.log(getTeacherName()) vẫn trả về Minh Thảo thì chúng ta sẽ sài bind()
+    //bind: rằng buộc
+    console.dir(Function) // trong prototype của func thì có địn nghĩa sẵn 1 cái method bind
+    const getTeacherName2 = teacher.getFullName.bind(teacher)
+    // bind(obj rằng buộc, các đối số), nó rằng buộc với đối tượng teacher
+    // đối số đầu tiên là obj để rằng buộc với this, từ đối số thứ 2 của nó chính là các tham số của phương thức(vd getFullName(data1, data2))
+    // lưu ý đối kiểu truyền tham số từ đối số thứ 2 là kiểu ko linh động
+    console.log(getTeacherName2()) // Minh Thảo
+
+    //vd
+    const student = {
+      firstName: 'Phan',
+      lastName: 'bảo'
+    }
+    const getTeacherName3 = teacher.getFullName.bind(student) // this trong trường hợp này trỏ về student
+    console.log(getTeacherName3()) // Phan Bảo
+
+
+    //đặc tính bind:
+    // -phương thức bind sẽ trả về 1 hàm mới
+    // có thể nhận được các đối số như hàm ban đâu
+
+    //vd: handle click dom  
+    const btn = document.querySelector('button')
+    // btn.onclick = teacher.getFullName() //teacher.getFullName() là 1 func 
+
+    // bên trong handle DOM nó sử dụng object button nó gọi đến onClick 
+    // -> this trong thằng onClick nó trỏ về thằng button -> undifined
+    btn.onclick = teacher.getFullName().bind(teacher) //teacher.getFullName() là 1 func 
+
+  </script>
+</body>
+</html>
