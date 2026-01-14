@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1 class="heading">hello bind() method</h1>
+  <input type="text" placeholder="enter car name:" id="input">
+  <button class="submit">Add</button>
+  <ul class="root"></ul>
+  <script>
+    const $ = document.querySelector.bind(document)
+    const $$ = document.querySelectorAll.bind(document)
+
+    // console.log(document.querySelector('.heading').innerText) 
+    // output: hello bind() method
+    // trỏ về object gọi thằng querySelector là document nên ko lỗi
+
+    // console.log($('.heading').innerText) 
+    // Uncaught TypeError: Illegal invocation
+    // context bị mất, trong trường hợp này context nó trỏ ra đối tượng global -> window
+    // dùng bind() để sửa
+
+    const app = (() => {
+      //IIFE, tạo ra 1 phạm vi độc lập
+      const cars = ['BMW']
+
+      const input = $('#input')  
+      const submit = $('.submit')
+      const root = $('.root')
+
+      return {
+        add(car) {
+          cars.push(car)
+        },
+        delete(index) {
+          cars.splice(index, 1)
+        },
+        render() {
+          const html = cars.map((car, index) => {
+            return `<li>
+                ${car}
+                <span class='delete' data-index='${index}'>X</span>
+              </li>`
+          }).join('')
+          root.innerHTML = html
+        },
+        handleDelete(e) {
+          const deleteBtn = e.target.closest('.delete') //đôi khi trong span có vài thẻ khác, dùng khi ấn vào thẻ con thì nó vẫn biết là bấm nút delete
+          if(deleteBtn) {
+            const index = deleteBtn.dataset.index
+            this.delete(index)
+            this.render()
+          }
+        },
+        init() {
+          // const _this = this //nếu ko xài arrow func thì xài kiểu này
+          //handle event DOM
+          submit.onclick = () => {
+            const car = input.value
+            this.add(car)
+            this.render()
+            input.value = null
+            input.focus()
+          }
+          root.onclick = this.handleDelete.bind(this)
+          this.render()
+        }
+      }
+    })()
+
+    app.init()
+  </script>
+</body>
+</html>

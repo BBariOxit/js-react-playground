@@ -66,7 +66,8 @@
 
     // bên trong handle DOM nó sử dụng object button nó gọi đến onClick 
     // -> this trong thằng onClick nó trỏ về thằng button -> undifined
-    btn.onclick = teacher.getFullName().bind(teacher) //teacher.getFullName() là 1 func 
+    
+    btn.onclick = teacher.getFullName().bind(teacher) //dùng bind để rằng buộc
 
   </script>
 </body>
