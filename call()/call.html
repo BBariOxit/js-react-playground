@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //gọi hàm với call method
+    function random() {
+      console.log(Math.random())
+    }
+    random() //khi gọi hàm thì engine của js nó gọi tới phương thức call để thục hiện gọi hàm
+
+    //gọi hàm và bind this
+    const teacher = {
+      firstName: 'Minh',
+      lastName: 'Thu'
+    }
+    const me = {
+      firstName: 'Phan',
+      lastName: 'Bảo',
+      showFullName() {
+        // console.log(this)//this ở đây là đang trỏ tới phạm vi window
+        console.log(`${this.firstName} ${this.lastName}`)
+      }
+    } 
+    me.showFullName() //Phan Bảo
+    me.showFullName.call(teacher) //kỹ thuật mượn hàm, thằng teacher không có method showFullName
+    //đối số 1 là đối tượng để bind(rằng buộc) this, tương tự như bind 
+    // call nó bind this và gọi luôn hàm đó 
+
+    //thể hiện được tính kế thừa trong OOP(extends)
+    function Animal(name, weight) {
+      this.name = name
+      this.weight =weight
+    }
+
+    function Monkey(name, weight, legs) {
+      Animal.call(this, name, weight) // (kế thừa)
+      // this trong trường hợp này là Monkey, chính là PhanBao, nó bind obj PhanBao có legs = 2 vào cái func Animal
+      // , ở func Animal nó thêm name, weight từ PhanBao
+      this.legs = legs
+    }
+    const PhanBao = new Monkey('Phan Bảo', 60, 2)
+    console.log(PhanBao)
+
+    //ví dụ với argument
+    function logger() {
+      console.log(...arguments) //cách sài với spread
+      console.log(arguments) 
+      //nó trả về đối tượng arguments, nó giống như mảng ở tính chất đánh index, trong prototype ko có các method hay gặp của array
+      // => muốn sài các method giống như arr => phải mượn cảu thằng array
+      // trong trường hợp này chúng ta bind this bằng arguments, nên forEach nó lặp qua thằng arguments
+      Array.prototype.forEach.call(arguments, i => console.log(i))
+
+      //vd với slice
+      const arr = Array.prototype.slice.call(arguments)
+      console.log(arr) //=> nó đã thành mảng
+      arr.forEach(i => console.log(i)) //xài tương tự như mảng luôn
+    }
+    logger(1,2,3,4,5)
+
+  </script>
+  <script src="call.js"></script>
+</body>
+</html>
